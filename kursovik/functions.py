@@ -201,7 +201,7 @@ def decipher_text(cipher,open_key,close_key):
 #Преобразование строки в список
 def from_str2lst(st):
 	m = []
-	for i in range(len(st)-2):
+	for i in range(len(st)-1):
 		if st[i] == "[":
 			a = 0
 			c = []
@@ -213,10 +213,7 @@ def from_str2lst(st):
 			if st[i + 1] == "]":
 				c.append(a)
 				m.append(c)
-	a = m[-1]
-	m = [m[:-1]]
-	m.append(a)
-	return m
+	return m[:-1]
 
 #Шифрование из текстового файла в текстовый файл
 def encrypt_text_from_file2newfile(file,newfile,open_k):
@@ -229,7 +226,7 @@ def encrypt_text_from_file2newfile(file,newfile,open_k):
 
 	c.close()
 	f.close()
-	return(close_k)
+	return
 
 #Дешифрование из текстового файла в текстовый файл
 def decipher_from_file2newfile(file,newfile,open_key,close_key):
@@ -237,6 +234,13 @@ def decipher_from_file2newfile(file,newfile,open_key,close_key):
 	c = open(newfile, 'a')
 	for l in f:
 		a = from_str2lst(l)
-		c.write(decipher_text(a,open_key,close_key))
+		c.write(decipher_text(a,open_key,close_key) + "\n")
 	f.close()
 	c.close()
+
+def str_open_key_2list(string):
+	b = string.split(',')
+	c1 = int(b[0][1:])
+	c2 = int(b[1])
+	c3 = int(b[2][:-1])
+	return [c1,c2,c3]
